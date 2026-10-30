@@ -1,23 +1,23 @@
-## Make expertise easier to evaluate
+﻿## Start with the decision
 
-Engineering buyers need enough detail to judge whether a supplier can solve their problem. An impressive list of machines or certifications is only a starting point. Useful content connects those capabilities to the decisions a buyer must make.
+Before choosing sensors or drawing a dashboard, write down the decision someone needs to make. A workshop supervisor might need to know whether a process has stopped, while a project lead needs to see which tasks are waiting for review. These are different questions and may need different data.
 
-Start with a question your sales or engineering team hears repeatedly. Perhaps customers struggle to compare fabrication methods, understand material trade-offs, or prepare a brief. A focused article can help them ask better questions before the first call.
+For each proposed measure, identify its source, unit, owner and expected update interval. Ask what action changes when the value changes. If nobody can describe that action, keep the measure out of the first release.
 
-## Build around a real buying question
+## Separate visibility from alerts
 
-Choose one decision and explain the factors that influence it. Describe the application, constraints, and trade-offs. Where the answer depends on operating conditions, say so. Avoid turning a technical article into a universal recommendation.
+A dashboard can show information that is useful occasionally. An alert interrupts someone and needs a stronger reason to exist. Agree the condition, the person responsible, the expected response and what happens if they cannot respond.
 
-For example, an article about selecting a fabrication partner could explain how drawing completeness, tolerances, inspection requirements, and order volume affect a quotation. Readers leave knowing what to prepare, and your team receives a more useful enquiry.
+Consider duration as well as a threshold. A brief fluctuation may need different treatment from a sustained change. Test proposed rules against representative operating conditions before turning notifications on. Record an acknowledgement and a resolution separately so a dismissed notification does not imply that the underlying issue is fixed.
 
-## Let subject-matter experts shape the draft
+## Show when the data is uncertain
 
-Interview the people who do the work. Ask what customers commonly misunderstand, what information is missing from briefs, and where a project can become more complicated than expected.
+A stale reading should not look like a live one. Display timestamps, connection status and missing values clearly. Keep units visible and distinguish an unavailable source from a valid zero.
 
-Have an appropriate technical reviewer check the finished piece. Marketing should improve clarity without removing qualifications that matter. Use diagrams, definitions, and examples when they make the explanation easier to follow.
+Decide how the system behaves when a sensor disconnects or readings arrive late. Where a signal might lead to a control action, agree limits and manual override with the responsible operational team. A monitoring dashboard is not a substitute for the safeguards required by the equipment.
 
-## Connect the article to a next step
+## Ignore noise deliberately
 
-Offer a relevant service page or an invitation to discuss a project. Keep the next step proportionate to the article: someone researching a process may not be ready to request a quotation.
+Avoid treating every available measurement as equally useful. Duplicate notifications, unowned alerts and charts with no decision attached make a system harder to use.
 
-Review the questions that arrive after publication. Their relevance can be more informative than page views alone. Use that feedback to refine the article and identify the next useful topic.
+Begin with a focused view and review it with the people on shift. Ask which alerts led to action, which arrived too late and which were ignored. Adjust the rules and document why. The aim is a system whose signals have a clear purpose, not a screen filled with numbers.

@@ -1,6 +1,6 @@
 # CodeSquad Engineering & Agriculture
 
-Next.js App Router marketing site for `engineering.codesquad.ai`.
+Next.js App Router specialist services site for `engineering.codesquad.ai`.
 
 ## Develop
 
@@ -46,3 +46,13 @@ No analytics or cookies are installed by this site. Contact links leave the site
 
 External photographs have original local SVG fallbacks in public/images. These illustrations display automatically if a remote image cannot load.
 
+
+## Service catalogue and delivery review
+
+The eight service areas and their deliverables are defined in `src/lib/content.ts`. They describe proposed service scope, not evidence of previous projects. Confirm delivery capability before launch, particularly equipment integration, sensor collection, field imagery data, automated controls and ongoing support commitments. No specific aerial or orbital imagery source is promised.
+
+`src/components/flow-diagram.tsx` supplies the delivery, season and monitoring diagrams. All labels remain readable without animation; reduced-motion preferences disable the sequence. Enquiry availability is defined in `src/lib/content.ts` and rendered by the shared availability component in both the form and FAQ. Submissions remain unwired.
+
+Legacy routes permanently redirect through `next.config.ts`. The sitemap derives its routes from the same service and article data as page generation. No individual files are needed for each detail route.
+
+For the local browser checks on Windows, run the production server on port 3107, then `node tests/site-check.mjs`. The check uses installed Edge in headless mode and writes screenshots and results to the ignored `.browser-check-reposition` directory. It checks every sitemap page at 1440px and 390px, headings, internal links, overflow, images, redirects, navigation, FAQ expansion, the not-sent form state and reduced motion. `CHECK_ORIGIN` can point to another local port.
