@@ -1,0 +1,18 @@
+export const origin = 'https://engineering.codesquad.ai';
+export const inquiry = '/contact#enquiry';
+export const booking = 'https://calendly.com/code_squad/30min';
+export const services = [
+ {slug:'content-creation',number:'01',title:'Content that makes complex clear.',short:'Content creation',description:'Turn deep expertise into articles, product stories, social content, and video that your buyers actually understand.',items:['Technical articles & thought leadership','Product photography & video direction','Social campaigns & sales collateral']},
+ {slug:'seo',number:'02',title:'Be found when it matters.',short:'SEO & search visibility',description:'Build a search presence around the questions your customers ask, from early research to supplier selection.',items:['Technical SEO & search strategy','Industry-led content planning','Search and AI discovery optimization']},
+ {slug:'social-media',number:'03',title:'Build a brand buyers remember.',short:'Social media marketing',description:'Give your expertise a consistent voice with thoughtful publishing, credible stories, and conversations that build trust.',items:['LinkedIn & channel strategy','Content calendars & creative production','Community management & reporting']},
+ {slug:'paid-media-lead-generation',number:'04',title:'Reach the right buying teams.',short:'Paid media & lead generation',description:'Connect targeted campaigns with useful landing pages and a clear next step, so interest becomes a meaningful enquiry.',items:['Search & paid social campaigns','Landing pages & conversion journeys','Lead quality & campaign reporting']}
+];
+export const industries = [
+ {slug:'engineering',label:'Engineering & manufacturing',title:'Built for businesses that build.',description:'Translate technical capability into a compelling reason to choose your business. We help industrial teams explain their expertise and reach the people who specify, source, and buy.',image:'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1600&q=85',segments:['Engineering consultancies','Manufacturers & fabricators','Industrial equipment suppliers','Automation & technology providers'],color:'blue'},
+ {slug:'agriculture',label:'Agriculture & agribusiness',title:'Grow your reach. Cultivate demand.',description:'Bring your knowledge of the land, your products, and your supply chain to the buyers who need it. Marketing shaped around seasonal demand and real agricultural decisions.',image:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=85',segments:['Commercial farms & growers','Agricultural equipment suppliers','Inputs & crop solutions','Food processors & distributors'],color:'green'}
+];
+export const articles = [
+ {slug:'technical-content-for-engineering-buyers',title:'Your next customer needs clarity, not more jargon.',category:'ENGINEERING',date:'2026-10-30',read:'5 min read',file:'engineering.mdx',image:industries[0].image,excerpt:'How to turn technical expertise into content that helps a buying team make a decision.'},
+ {slug:'agricultural-marketing-seasonal-demand',title:'Plan your marketing around the growing season.',category:'AGRICULTURE',date:'2026-10-30',read:'4 min read',file:'agriculture.mdx',image:industries[1].image,excerpt:'A practical approach to matching agricultural content with the moments buyers need it.'},
+ {slug:'expertise-to-qualified-enquiries',title:'From industry expertise to your next enquiry.',category:'STRATEGY',date:'2026-10-30',read:'4 min read',file:'strategy.mdx',image:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85',excerpt:'Connect useful content, clear service pages, and a simple conversation starter.'}
+];
