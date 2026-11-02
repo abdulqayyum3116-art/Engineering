@@ -22,7 +22,7 @@ export function Hero(){
  return <div ref={ref} className="engineering-hero"><section className="hero hero-centered">
   <div className="hero-copy"><span className="eyebrow"><span className="live-dot"/> AI, SOFTWARE &amp; ENGINEERING SOLUTIONS.</span>
    <h1 aria-label={headline}>{headline.split(' ').map((word,index)=><span aria-hidden="true" className={'hero-word '+(word==='work.'?'serif':'')} key={index} style={{'--word-order':index} as CSSProperties}>{word}{' '}</span>)}<span aria-hidden="true" className="hero-star">✳</span></h1>
-   <p className="hero-enter-copy">CodeSquad designs and builds AI, custom software, cloud and automation systems for engineering firms, manufacturers and industrial teams — from live monitoring to the tools your team uses every day. We also build systems for agricultural operations.</p>
+   <p className="hero-enter-copy">CodeSquad builds AI, custom software, cloud and automation systems for engineering firms, manufacturers and industrial teams.</p>
    <div className="hero-actions"><a className="button" href={inquiry}>Let’s talk <ArrowUpRight size={18}/></a><Link className="quiet-link" href="/services">Explore our services <ArrowDown size={16}/></Link></div>
    <div className="hero-note"><span className="mini-line"/> Software. Automation. Data. Built around your operation.</div>
   </div>

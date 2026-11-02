@@ -8,3 +8,4 @@ node_modules/
 .npm-cache/
 .browser-check*/
 preview*.png
+.env.local
