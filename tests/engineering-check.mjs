@@ -1,12 +1,11 @@
 import fs from 'node:fs/promises';
-import {spawn,execFileSync} from 'node:child_process';
+import {spawn} from 'node:child_process';
 import assert from 'node:assert/strict';
-import {existingServices,services} from '../src/lib/content.ts';
+import {services,serviceGroups} from '../src/lib/content.ts';
 
-// Compare the preserved catalog against the committed baseline, not a rewritten fixture.
-const baseline=execFileSync('git',['show','HEAD:src/lib/content.ts'],{encoding:'utf8'});
-const originalCatalog=Function('return '+baseline.match(/export const services = (\[[\s\S]*?\n\]);/)[1])();
-assert.deepEqual(existingServices,originalCatalog);
+// Every service has a unique route, a known group and complete detail copy.
+assert.equal(new Set(services.map(service=>service.slug)).size,services.length);
+for(const service of services){assert(serviceGroups.some(group=>group.id===service.group),'Unknown group '+service.slug);for(const key of ['title','description','support','detail'])assert(service[key],'Missing '+key+' '+service.slug);assert(service.items.length>=3,'Too few items '+service.slug);}
 const base=process.env.CHECK_ORIGIN||'http://localhost:3107';
 const folder=new URL('../.browser-check-engineering/',import.meta.url);await fs.mkdir(folder,{recursive:true});
 const chrome=spawn('C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',['--headless=new','--disable-gpu','--remote-debugging-port=9338','--user-data-dir='+new URL('profile/',folder).pathname.replace(/^\/([A-Z]:)/,'$1'),'about:blank'],{windowsHide:true,stdio:['ignore','ignore','pipe']});

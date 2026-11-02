@@ -2,6 +2,8 @@
 const config: NextConfig = {
  turbopack:{rules:{'*.css':{loaders:['@tailwindcss/turbopack'],as:'*.css'}}},
  async redirects(){return [
+  {source:'/services/engineering-software',destination:'/services/custom-software-development',permanent:true},
+  {source:'/services/ai-automation',destination:'/services/ai-agents-automation',permanent:true},
   {source:'/services/content-creation',destination:'/services',permanent:true},
   {source:'/services/seo',destination:'/services',permanent:true},
   {source:'/services/social-media',destination:'/services',permanent:true},
