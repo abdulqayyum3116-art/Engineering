@@ -6,11 +6,16 @@ const study = (overrides = {}) => ({slug:'industrial-project',name:'Industrial P
 
 test('selects published industry matches without relabelling other sectors', () => {
   const rows = [study(), study({slug:'farm-project',cat:'Agricultural equipment',filter:''}),study({slug:'legal-project',cat:'Legal',filter:'Legal',body:'Prompt engineering for documents'}),study({slug:'draft-project',published:false}),study({slug:'wellness-project',cat:'DTC Wellness',filter:'Healthcare'}),null,study({slug:'../bad'}),study()];
-  assert.deepEqual(selectRelevantStudies(rows).map(s=>s.slug), ['industrial-project','farm-project']);
+  assert.deepEqual(selectRelevantStudies(rows).map(s=>s.slug), ['industrial-project']);
   const included = selectRelevantStudies(rows,'wellness-project,draft-project');
-  assert.equal(included.length,3);
-  assert.equal(included[2].cat,'DTC Wellness');
+  assert.equal(included.length,2);
+  assert.equal(included[1].cat,'DTC Wellness');
   assert.equal(included[0].img,'https://www.codesquad.ai/cover.jpg');
+});
+
+test('engineering studies lead, then included studies in the order listed', () => {
+  const rows = [study({slug:'second',cat:'Legal',filter:'Legal'}),study({slug:'first',cat:'Finance',filter:'Finance'}),study({slug:'engineering-project'})];
+  assert.deepEqual(selectRelevantStudies(rows,'first,second').map(s=>s.slug), ['engineering-project','first','second']);
 });
 
 test('rejects unsafe image schemes', () => {

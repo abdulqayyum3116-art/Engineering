@@ -11,7 +11,11 @@ export type CaseStudyConfig = {url?: string; key?: string; includeSlugs?: string
 
 // Match industry metadata only. A reference to "prompt engineering" in the
 // article body must not classify a healthcare project as engineering work.
-const industryPattern = /\b(engineering|manufactur(?:ing|er|ers)|industrial|agri|agriculture|agricultural|agribusiness|agritech|agtech|farming|farm(?:s|ing)?|growers?|horticulture|irrigation|crop(?:s)?|food processing)\b/i;
+const industryPattern = /\b(engineering|manufactur(?:ing|er|ers)|industrial)\b/i;
+
+// No published study is from an engineering client yet, so these technical systems
+// from other sectors are shown under their own industry labels, closest match first.
+export const defaultIncludeSlugs = 'settlein,rtm-kinetics,mamas-compass,ipromo';
 
 export function safeImageUrl(value: unknown): string | null {
   if (typeof value !== 'string' || !value.trim()) return null;
@@ -22,9 +26,10 @@ export function safeImageUrl(value: unknown): string | null {
 }
 
 export function selectRelevantStudies(rows: unknown[], includeSlugs = ''): CaseStudy[] {
-  const included = new Set(includeSlugs.split(',').map(s => s.trim()).filter(Boolean));
+  const includeOrder = includeSlugs.split(',').map(s => s.trim()).filter(Boolean);
+  const included = new Set(includeOrder);
   const seen = new Set<string>();
-  return rows.flatMap(value => {
+  const studies = rows.flatMap(value => {
     if (!value || typeof value !== 'object') return [];
     const row = value as Record<string, unknown>;
     if (row.published !== true || typeof row.slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(row.slug) || typeof row.name !== 'string' || !row.name.trim() || seen.has(row.slug)) return [];
@@ -34,6 +39,9 @@ export function selectRelevantStudies(rows: unknown[], includeSlugs = ''): CaseS
     seen.add(row.slug);
     return [{slug: row.slug, name: row.name, cat, filter, tagline: typeof row.tagline === 'string' ? row.tagline : '', img: safeImageUrl(row.img)}];
   });
+  // Engineering-labelled studies lead, so they take the homepage's featured slots once they exist.
+  const rank = (study: CaseStudy) => industryPattern.test(`${study.cat} ${study.filter}`) ? -1 : includeOrder.indexOf(study.slug);
+  return studies.sort((a, b) => rank(a) - rank(b));
 }
 
 export async function fetchCaseStudies(config: CaseStudyConfig, request: typeof fetch = fetch): Promise<CaseStudyResult> {
