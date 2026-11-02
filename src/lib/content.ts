@@ -52,3 +52,11 @@ export const articles = [
  {slug:'precision-agriculture-data',title:'Precision agriculture without the hype: the field data that actually changes a decision',category:'AGRICULTURE',date:'2026-10-30',read:'2 min read',file:'agriculture.mdx',image:industries[1].image,excerpt:'Choose field data around the decisions it can inform, with context and uncertainty kept in view.'},
  {slug:'farm-records-systems',title:'From notebooks and spreadsheets to a farm record system your team will actually use',category:'AGRICULTURE / OPERATIONS',date:'2026-10-30',read:'2 min read',file:'strategy.mdx',image:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85',excerpt:'Design records around daily tasks, clear ownership and a manageable first rollout.'},
 ];
+export const startingPoints:{problem:string;outcome:string;slug:string}[] = [
+ {problem:'Not sure where AI fits in your business?',outcome:'Find the use cases worth piloting and the ones to skip.',slug:'ai-strategy-adoption'},
+ {problem:'Repeating the same multi-step tasks every day?',outcome:'Hand routine work to agents and workflows, with approvals where needed.',slug:'ai-agents-automation'},
+ {problem:'Answers buried in manuals, specs and email?',outcome:'Search and ask questions across your own documents, with sources.',slug:'generative-ai-nlp'},
+ {problem:'Running the business on spreadsheets?',outcome:'Replace workarounds with a system built around your workflow.',slug:'custom-software-development'},
+ {problem:'Releases slow, risky or done by hand?',outcome:'Automated deployments, monitoring and predictable cloud costs.',slug:'cloud-devops'},
+ {problem:'No live view of the plant or site?',outcome:'Sensor data, dashboards and alerts that reach the right person.',slug:'industrial-automation'},
+];

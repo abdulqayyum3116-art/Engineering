@@ -34,8 +34,14 @@ try{
   for(const route of ['/','/services']){
    await navigate(route);
    assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth'),false);
-   assert.equal(await evaluate('document.title'),route==='/'?'Engineering Solutions & Services | CodeSquad':'Engineering Services | CodeSquad');
-   assert.equal(await evaluate('document.querySelectorAll(".engineering-service-card").length'),6);
+   assert.equal(await evaluate('document.title'),route==='/'?'AI, Software & Engineering Solutions | CodeSquad':'AI, Software & Engineering Services | CodeSquad');
+   if(route==='/'){
+    assert.equal(await evaluate('document.querySelectorAll("[role=tab]").length'),4);
+    assert.equal(await evaluate('document.querySelectorAll(".sx-option").length'),services.length);
+    assert.equal(await evaluate('document.querySelectorAll(".sp-card").length'),6);
+    await screenshot('home-explorer-'+width,'.services-section');
+   }else{
+   assert.equal(await evaluate('document.querySelectorAll(".engineering-service-card").length'),services.filter(s=>s.group!=='agriculture').length);
    assert.equal(await evaluate('document.querySelectorAll(".agriculture-service-band li").length'),4);
    assert.equal(await evaluate('getComputedStyle(document.querySelector(".engineering-services-grid")).gridTemplateColumns.split(" ").length'),width===1440?3:width===900?2:1);
    const descriptions=await evaluate('Array.from(document.querySelectorAll(".engineering-service-card>p,.agriculture-service-band li p,.shared-service-strip p"),e=>e.textContent)');
@@ -44,6 +50,7 @@ try{
    const balance=await evaluate(`(()=>{const height=s=>document.querySelector(s).getBoundingClientRect().height;const engineering=height('.engineering-panel'),shared=height('.shared-service-strip'),agriculture=height('.agriculture-service-band');return {engineering,shared,agriculture,engineeringShare:(engineering+shared)/(engineering+shared+agriculture)*100}})()`);
    if(width===1440)assert(balance.engineeringShare>=70,'Agriculture exceeds 30%');
    results.push({route,width,balance});console.log("PASS layout",route,width,JSON.stringify(balance));
+   }
    if(route==='/'){
     await screenshot('hero-'+width,'.engineering-hero');
     const hero=await evaluate(`(()=>{const rect=s=>document.querySelector(s).getBoundingClientRect();return {agricultureFrames:document.querySelectorAll('.photo-agri').length,heroHeight:rect('.engineering-hero').height,headerHeight:rect('.header').height,ctaBottom:rect('.hero-actions').bottom,wordOpacity:[...document.querySelectorAll('.hero-word')].map(e=>getComputedStyle(e).opacity),schematic:getComputedStyle(document.querySelector('.hero-schematic')).display,marquee:getComputedStyle(document.querySelector('.marquee-track')).animationDuration}})()`);
@@ -66,14 +73,14 @@ try{
   for(const width of [1440,390]){await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});for(const route of ['/','/services']){
    await navigate(route);
    assert.equal(await evaluate(`Array.from(document.querySelectorAll('.hero-word,.hero-enter-copy,.hero-actions,.main-frame-entrance,.photo-agri,[data-reveal],.engineering-service-card')).every(e=>getComputedStyle(e).opacity==='1')`),true,mode+' visibility');
-   assert.equal(await evaluate(`document.querySelector('.services-showcase').getAnimations({subtree:true}).length`),0);
+   assert.equal(await evaluate(`document.querySelector(${JSON.stringify(route==='/'?'.services-explorer':'.services-showcase')}).getAnimations({subtree:true}).length`),0);
    if(route==='/'){
     assert.equal(await evaluate(`document.querySelector('.engineering-hero').getAnimations({subtree:true}).length`),0);
     assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('.engineering-chips>span')).filter(e=>getComputedStyle(e).opacity==='1').map(e=>e.textContent)`),['Live monitoring']);
     assert.equal(await evaluate(`getComputedStyle(document.querySelector('.marquee-track>span+span')).display`),'none');
     await screenshot(mode+'-hero-'+width,'.engineering-hero');
    }
-   await screenshot(mode+(route==='/'?'-home':'-services')+'-'+width,'.services-showcase');
+   await screenshot(mode+(route==='/'?'-home':'-services')+'-'+width,route==='/'?'.services-section':'.services-showcase');
   }}
  }
  assert.deepEqual(errors,[],'Browser console errors/warnings');
