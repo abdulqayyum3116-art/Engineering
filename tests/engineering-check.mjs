@@ -76,7 +76,7 @@ try{
    assert.equal(await evaluate(`document.querySelector(${JSON.stringify(route==='/'?'.services-explorer':'.services-showcase')}).getAnimations({subtree:true}).length`),0);
    if(route==='/'){
     assert.equal(await evaluate(`document.querySelector('.engineering-hero').getAnimations({subtree:true}).length`),0);
-    assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('.engineering-chips>span')).filter(e=>getComputedStyle(e).opacity==='1').map(e=>e.textContent)`),['Live monitoring']);
+    assert.equal(await evaluate(`document.querySelectorAll('.engineering-hero img').length`),0,'Hero has no image');
     assert.equal(await evaluate(`getComputedStyle(document.querySelector('.marquee-track>span+span')).display`),'none');
     await screenshot(mode+'-hero-'+width,'.engineering-hero');
    }

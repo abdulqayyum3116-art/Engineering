@@ -115,3 +115,11 @@
  .sp-heading{flex-direction:column;gap:10px}.sp-heading h3{font-size:26px}.sp-grid{grid-template-columns:1fr}.sp-fallback{padding:18px}}
 @media(prefers-reduced-motion:reduce){.sx-panel,.sx-detail{animation:none}.sp-card,.sp-card:hover{transition:none;transform:none}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Centred, image-free hero */
+.engineering-hero .hero.hero-centered{grid-template-columns:1fr;justify-items:center;text-align:center}
+.hero-centered .hero-copy{display:flex;flex-direction:column;align-items:center;max-width:1000px;margin:0 auto}
+.hero-centered .eyebrow{justify-content:center}
+.engineering-hero .hero-centered h1{font-size:clamp(46px,6.2vw,92px);letter-spacing:-3.8px}
+.hero-centered p{max-width:680px;margin-left:auto;margin-right:auto;font-size:15px}
+.hero-centered .hero-actions,.hero-centered .hero-note{justify-content:center}
+@media(max-width:760px){.engineering-hero .hero-centered h1{font-size:44px;letter-spacing:-2px}.hero-centered p{font-size:13px}}
