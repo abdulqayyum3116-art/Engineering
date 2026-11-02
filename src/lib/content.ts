@@ -1,7 +1,7 @@
 export const origin = 'https://engineering.codesquad.ai';
 export const inquiry = '/contact#enquiry';
 export const booking = 'https://calendly.com/code_squad/30min';
-export const enquiryNotice = 'Online submissions are coming soon. For now, email info@codesquad.ai or book a consultation.';
+export const enquiryNotice = 'Prefer not to use the form? Email info@codesquad.ai or book a consultation.';
 export type ServiceGroupId = 'ai'|'software'|'engineering'|'growth'|'agriculture';
 export const serviceGroups:{id:ServiceGroupId;title:string;description:string;best?:string}[] = [
  {id:'ai',title:'AI & Automation',description:'Practical AI adoption — from choosing the right use case to agents and language systems your team can trust.',best:'Best for operations leaders, document-heavy teams and repetitive back-office work.'},

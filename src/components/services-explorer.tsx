@@ -6,22 +6,24 @@ import {ArrowUpRight,Check} from 'lucide-react';
 import {inquiry,serviceGroups,servicesByGroup,type ServiceGroupId} from '@/lib/content';
 import {ServiceIconGlyph} from './service-icon';
 
-const tabLabels:Record<ServiceGroupId,string>={ai:'AI & Automation',software:'Software & Cloud',engineering:'Engineering',growth:'Growth',agriculture:'Agriculture'};
+const tabOrder:ServiceGroupId[]=['growth','ai','software','engineering','agriculture'];
+const tabLabels:Record<ServiceGroupId,string>={growth:'Growth',ai:'AI & Automation',software:'Software & Cloud',engineering:'Engineering',agriculture:'Agriculture'};
+const explorerGroups=tabOrder.map(id=>serviceGroups.find(group=>group.id===id)!);
 
 export function ServicesExplorer(){
- const [activeGroup,setActiveGroup]=useState<ServiceGroupId>(serviceGroups[0].id);
- const [selected,setSelected]=useState<Record<string,string>>(()=>Object.fromEntries(serviceGroups.map(group=>[group.id,servicesByGroup(group.id)[0].slug])));
+ const [activeGroup,setActiveGroup]=useState<ServiceGroupId>(explorerGroups[0].id);
+ const [selected,setSelected]=useState<Record<string,string>>(()=>Object.fromEntries(explorerGroups.map(group=>[group.id,servicesByGroup(group.id)[0].slug])));
  const tabs=useRef<(HTMLButtonElement|null)[]>([]);
- const choose=(index:number,focus=false)=>{setActiveGroup(serviceGroups[index].id);const tab=tabs.current[index];if(!tab)return;if(focus)tab.focus({preventScroll:true});const list=tab.parentElement!;list.scrollTo({left:tab.offsetLeft-list.clientWidth/2+tab.offsetWidth/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
+ const choose=(index:number,focus=false)=>{setActiveGroup(explorerGroups[index].id);const tab=tabs.current[index];if(!tab)return;if(focus)tab.focus({preventScroll:true});const list=tab.parentElement!;list.scrollTo({left:tab.offsetLeft-list.clientWidth/2+tab.offsetWidth/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
  const onTabKey=(event:KeyboardEvent<HTMLButtonElement>,index:number)=>{
-  const keys:Record<string,number>={ArrowRight:index+1,ArrowLeft:index-1,Home:0,End:serviceGroups.length-1};
+  const keys:Record<string,number>={ArrowRight:index+1,ArrowLeft:index-1,Home:0,End:explorerGroups.length-1};
   if(!(event.key in keys))return;event.preventDefault();
-  const next=(keys[event.key]+serviceGroups.length)%serviceGroups.length;
+  const next=(keys[event.key]+explorerGroups.length)%explorerGroups.length;
   choose(next,true);
  };
  return <div className="services-explorer">
-  <div className="sx-tabs" role="tablist" aria-label="Service areas">{serviceGroups.map((group,index)=>{const active=group.id===activeGroup;return <button key={group.id} ref={el=>{tabs.current[index]=el;}} type="button" role="tab" id={'sx-tab-'+group.id} aria-controls={'sx-panel-'+group.id} aria-selected={active} tabIndex={active?0:-1} className={'sx-tab'+(active?' active':'')} onClick={()=>choose(index)} onKeyDown={event=>onTabKey(event,index)}>{tabLabels[group.id]}<span className="sx-count">{servicesByGroup(group.id).length}</span></button>;})}</div>
-  {serviceGroups.map(group=>{const list=servicesByGroup(group.id);const current=selected[group.id];return <section key={group.id} className={'sx-panel sx-panel-'+group.id} role="tabpanel" id={'sx-panel-'+group.id} aria-labelledby={'sx-tab-'+group.id} hidden={group.id!==activeGroup}>
+  <div className="sx-tabs" role="tablist" aria-label="Service areas">{explorerGroups.map((group,index)=>{const active=group.id===activeGroup;return <button key={group.id} ref={el=>{tabs.current[index]=el;}} type="button" role="tab" id={'sx-tab-'+group.id} aria-controls={'sx-panel-'+group.id} aria-selected={active} tabIndex={active?0:-1} className={'sx-tab'+(active?' active':'')} onClick={()=>choose(index)} onKeyDown={event=>onTabKey(event,index)}>{tabLabels[group.id]}<span className="sx-count">{servicesByGroup(group.id).length}</span></button>;})}</div>
+  {explorerGroups.map(group=>{const list=servicesByGroup(group.id);const current=selected[group.id];return <section key={group.id} className={'sx-panel sx-panel-'+group.id} role="tabpanel" id={'sx-panel-'+group.id} aria-labelledby={'sx-tab-'+group.id} hidden={group.id!==activeGroup}>
    <header className="sx-intro"><h3>{group.id==='agriculture'?'Agriculture & agribusiness':group.title}</h3><p>{group.description}</p></header>
    <div className="sx-body" style={{'--sx-rows':list.length} as CSSProperties}>{list.map((service,index)=>{const open=service.slug===current;return <div className="sx-item" key={service.slug}>
     <button type="button" className={'sx-option'+(open?' active':'')} aria-expanded={open} aria-controls={'sx-detail-'+service.slug} onClick={()=>setSelected(state=>({...state,[group.id]:service.slug}))}><ServiceIconGlyph icon={service.icon} size={20} strokeWidth={1.6} aria-hidden="true"/><span>{service.short}</span><ArrowUpRight className="sx-option-arrow" size={16} aria-hidden="true"/></button>

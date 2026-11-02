@@ -181,4 +181,59 @@ img{max-width:100%}
 @media(max-width:1000px){.finder-answer,.directory-group,.services-agriculture{grid-template-columns:minmax(0,1fr)}.directory-group header{position:static}.directory-group{padding-bottom:48px}}
 @media(max-width:700px){.services-lead>p{font-size:16px}.service-finder{margin-top:48px}.finder-problems a{font-size:15px;padding:9px 16px}.service-line{grid-template-columns:minmax(0,1fr) 24px;gap:10px 14px}.service-line>div{grid-column:1/-1;grid-row:2}.service-line>svg{grid-column:2;grid-row:1}.service-line p{font-size:16px}.services-agriculture ul{grid-template-columns:minmax(0,1fr)}.finder-actions .button{width:100%}}
 .finder-answer{scroll-margin:16px}
-@media(min-width:1200px){.case-studies .article-grid:has(>:nth-child(4):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1200px){.case-studies .article-grid:has(>:nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* Case study articles: markup comes from the shared Supabase table */
+.cs-container{padding-left:var(--gutter);padding-right:var(--gutter)}
+.cs-study svg{width:18px;height:18px;flex-shrink:0}
+.cs-study p{max-width:64ch;font-size:17px;line-height:1.6;color:#4f5a50}
+.cs-study h2{font-size:clamp(30px,3.4vw,54px);font-stretch:82%;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+.cs-study h3{font-size:22px;font-stretch:88%;font-weight:600;line-height:1.2;letter-spacing:-.01em}
+.cs-study-hero{position:relative;display:flex;align-items:flex-end;min-height:min(78vh,720px);padding:48px 0 56px;overflow:hidden;background:var(--ink);color:#fff}.cs-study-hero .cs-container{position:relative;z-index:1;width:100%}
+.cs-study-hero__image{position:absolute;inset:0}.cs-study-hero__contrast{position:absolute;inset:0;background:linear-gradient(180deg,#242e2999,#242e29f2 72%)}
+.cs-study-hero h1{max-width:18ch;margin-top:10px;font-size:clamp(46px,7vw,112px);font-stretch:78%;font-weight:600;line-height:.98;letter-spacing:-.03em;color:#fff}
+.cs-study a:focus-visible{outline-offset:3px}.cs-study-hero a:focus-visible,.cs-study-section--ink a:focus-visible{outline-color:var(--lime)}
+.cs-study-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:18px;font-size:15px;color:#fff;text-decoration:underline;text-underline-offset:4px}
+.cs-study-hero .cs-study-label{font-size:15px;font-weight:600;color:var(--lime)}.cs-study-hero .cs-study-kicker{margin-top:14px;font-size:clamp(20px,2vw,28px);line-height:1.25;color:#fff}.cs-study-hero .cs-study-intro{margin-top:14px;font-size:18px;color:#e4ead9}
+.cs-study-meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:20px;font-size:15px;line-height:1.4}.cs-study-meta span{color:var(--lime)}.cs-study-meta strong{font-weight:500}
+.cs-study-hero__cta{margin-top:26px}
+.cs-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:12px 22px;border:1px solid transparent;border-radius:5px;font-size:15px;font-weight:600;line-height:1.2}.cs-btn--primary{background:var(--lime);color:var(--ink)}.cs-btn--ghost{border-color:var(--ink)}
+.cs-study-metrics,.cs-study-bigstats{border-bottom:1px solid var(--line)}.cs-study-metrics__grid,.cs-study-bigstats__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px clamp(24px,4vw,64px);padding-top:32px;padding-bottom:32px}
+.cs-study-metrics__grid strong,.cs-study-bigstats__grid strong{display:block;font-stretch:82%;font-weight:600;line-height:1.05;letter-spacing:-.02em}.cs-study-metrics__grid strong{font-size:clamp(26px,2.6vw,38px)}.cs-study-bigstats__grid strong{font-size:clamp(46px,5.4vw,84px)}
+.cs-study-metrics__grid span,.cs-study-bigstats__grid span{display:block;margin-top:6px;max-width:34ch;font-size:15px;line-height:1.45;color:#5d675e}
+.cs-study-proof{padding-top:clamp(32px,4vw,56px)}.cs-study-proof__figure{margin:0}.cs-study-proof__figure img{height:auto;border-radius:8px;border:1px solid var(--line)}.cs-study-proof__figure figcaption{margin-top:12px;font-size:15px;line-height:1.5;color:#5d675e}
+.cs-study-section{padding:clamp(52px,7vw,104px) 0}.cs-study-section--soft{background:var(--soft-tint)}.cs-study-section--ink,.cs-study-quote{background:var(--ink);color:var(--paper)}
+.cs-study-section--ink h2,.cs-study-section--ink h3,.cs-study-quote h2{color:#fff}.cs-study-section--ink p,.cs-study-narrative--dark p{color:#d9dfd3}
+.cs-study-heading>span,.cs-study-conclusion>span{display:block;margin-bottom:12px;font-size:15px;font-weight:600;line-height:1.3;color:#4c692f}.cs-study-section--ink .cs-study-heading>span,.cs-study-quote .cs-study-conclusion>span{color:var(--lime)}
+.cs-study-heading--wide{max-width:900px;margin-bottom:clamp(24px,3vw,44px)}.cs-study-heading--wide:last-child{margin-bottom:0}
+.cs-study-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,88px)}
+.cs-study-copy>*+*,.cs-study-narrative>*+*,.cs-study-point+.cs-study-point{margin-top:16px}.cs-study-heading .cs-study-narrative{margin-top:clamp(20px,2.4vw,32px)}
+.cs-study-list{margin:16px 0 0;padding:0;list-style:none}.cs-study-list li{max-width:64ch;padding:12px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.55;color:#4f5a50}.cs-study-list b,.cs-study-point strong,.cs-study-point b{color:var(--ink)}.cs-study-section--ink .cs-study-list li{border-color:#f7f7f02e;color:#d9dfd3}.cs-study-section--ink .cs-study-list b{color:#fff}
+.cs-study-icons,.cs-study-cards,.cs-study-capabilities,.cs-study-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:28px clamp(24px,3vw,48px)}
+.cs-study-icons__item,.cs-study-card,.cs-study-results__group{padding-top:20px;border-top:2px solid var(--ink)}.cs-study-section--ink .cs-study-icons__item,.cs-study-section--ink .cs-study-card,.cs-study-section--ink .cs-study-results__group{border-color:#f7f7f04d}
+.cs-study-icons__icon{display:inline-grid;place-items:center;width:44px;height:44px;margin-bottom:16px;border-radius:8px;background:var(--lime);color:var(--ink)}.cs-study-icons__icon svg{width:22px;height:22px}.cs-study-icons__item p,.cs-study-card p{margin-top:8px;font-size:16px}
+.cs-study-results__item{padding:12px 0;font-size:16px;line-height:1.5}.cs-study-results__item+.cs-study-results__item{border-top:1px solid var(--line)}
+.cs-study-quote blockquote{max-width:30ch;margin:0;font-size:clamp(26px,3.2vw,48px);font-stretch:85%;font-weight:500;line-height:1.14;letter-spacing:-.015em;color:#fff}.cs-study-quote cite{display:block;margin-top:20px;font-size:16px;font-stretch:100%;font-style:normal;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--lime)}
+.cs-study-conclusion{margin-top:clamp(36px,5vw,64px);padding-top:28px;border-top:1px solid #f7f7f02e}
+.cs-faq{max-width:900px}.cs-faq__item{border-bottom:1px solid var(--line)}.cs-faq__item:first-child{border-top:1px solid var(--line)}.cs-faq__item summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:56px;padding:12px 0;font-size:18px;line-height:1.35;cursor:pointer;list-style:none}.cs-faq__item summary::-webkit-details-marker{display:none}.cs-faq__item summary::after{content:'+';flex-shrink:0;font-size:22px}.cs-faq__item[open] summary::after{content:'–'}.cs-faq__item summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.cs-faq__item p{padding-bottom:18px;font-size:16px}
+.cs-study-cta{margin:0 var(--gutter);padding:clamp(40px,6vw,80px) 0;border-radius:8px;background:var(--lime);text-align:center}.cs-study-cta p{margin:0 auto 10px;font-size:16px;font-weight:600;color:var(--ink)}.cs-study-cta h2{max-width:24ch;margin:0 auto}.cs-study-cta__actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}.cs-study-cta .cs-btn--primary{background:var(--ink);color:#fff}
+.more-studies-heading{margin-bottom:32px;font-size:clamp(30px,3vw,46px);font-stretch:82%;font-weight:600}
+@media(max-width:800px){.cs-study-split{grid-template-columns:minmax(0,1fr)}.cs-study-hero{min-height:0;padding-top:28px}.cs-study p,.cs-study-list li{font-size:16px}.cs-study-hero .cs-study-intro{font-size:16px}.cs-study-hero__cta .cs-btn,.cs-study-cta__actions .cs-btn{width:100%}.cs-study-cta__actions{padding:0 20px}.cs-study-cta h2{padding:0 16px}}
+
+/* Pinned header: anchor targets and other sticky elements sit below it */
+:root{--header-height:108px}
+html{scroll-padding-top:calc(var(--header-height) + 8px)}
+.header{position:sticky;top:0;z-index:50;background:var(--paper)}
+.directory-group header{top:calc(var(--header-height) + 24px)}
+@media(max-width:760px){:root{--header-height:84px}.nav{max-height:calc(100svh - var(--header-height));overflow-y:auto}}
+
+/* Current page in the main navigation: padding is offset so the row does not shift */
+.nav>a[aria-current=page],.nav:not(.open)>a[aria-current=page]:not(.button){margin:-8px -12px;padding:8px 12px;border-radius:999px;background:var(--lime)}
+@media(max-width:1100px){.nav:not(.open)>a[aria-current=page]:not(.button){margin:-8px;padding:8px}}
+.nav.open>a[aria-current=page]:not(.button){margin:0;padding:0 12px;border-radius:6px;border-bottom-color:transparent;font-weight:600}
+
+/* Enquiry form */
+.form-grid-wide{grid-column:1/-1}
+.enquiry-panel button[disabled]{opacity:.7;cursor:progress}
+.enquiry-panel [role=status]:focus{outline:none}
+.enquiry-panel .form-notice-sent{background:#eef6d2;border-color:#9db35a;color:#2f4220}

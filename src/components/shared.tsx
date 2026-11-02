@@ -7,7 +7,7 @@ export function CTA(){return <><section className="section faq"><div><span class
  ['Can you work with our existing tools and systems?',<>Yes. We assess what you already use and integrate or build around it where practical.</>],
  ['Do we need all of these services?',<>No. Most projects start with one system and a focused scope agreed after assessment.</>],
  ['Which markets do you serve?',<>This practice focuses on engineering and agricultural businesses in the US, UK, Canada, and UAE.</>],
- ['What happens when I enquire?',<><EnquiryAvailability/> Share your project or operation so we can discuss the next step. You can use the on-site form once submissions are live.</>],
+ ['What happens when I enquire?',<>Send the form on our contact page with your project or operation, and we’ll get in touch about the next step. <EnquiryAvailability/></>],
 ].map(([q,a])=><details key={String(q)}><summary>{q}<span>+</span></summary><p>{a}</p></details>)}</div></section><section className="cta"><span className="eyebrow">GOOD THINGS START WITH A CONVERSATION</span><h2>You know your operation.<br/>Let’s build the system it deserves.</h2><a className="button" href={inquiry}>Let’s talk <ArrowUpRight size={18}/></a><p>No pitch deck marathon. Just a practical conversation.</p></section></>}
 export function Footer(){return <footer className="site-footer"><div className="site-footer-inner">
  <div className="footer-main">

@@ -42,9 +42,9 @@ try{
     if(width===390){await evaluate(`document.querySelector('.menu-toggle').click()`);assert.equal(await evaluate(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')`),'true');await evaluate(`document.querySelector('.menu-toggle').click()`)}
    }
    if(route==='/contact'){
-    assert.equal(await evaluate(`document.querySelectorAll('input[type=checkbox]').length`),8);
-    await evaluate(`document.querySelector('#enquiry-name').value='Test';document.querySelector('#enquiry-email').value='test@example.com';document.querySelector('#enquiry-company').value='Test';document.querySelector('#enquiry-industry').value='engineering';document.querySelector('#enquiry-message').value='Testing a project enquiry.';document.querySelector('form').requestSubmit()`);await pause(100);
-    assert.match(await evaluate(`document.querySelector('[role=status]').textContent`),/has not been sent/);
+    assert.equal(await evaluate(`Boolean(document.querySelector('#enquiry-industry'))`),false);
+    assert.equal(await evaluate(`document.querySelector('#enquiry-phone').required`),true);
+    assert.equal(await evaluate(`document.querySelector('.enquiry-panel form').checkValidity()`),false);
    }
    results.push({route,width,title:data.title,screenshot:name});console.log('PASS',width,route);
   }
