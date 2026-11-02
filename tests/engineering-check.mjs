@@ -1,11 +1,12 @@
 import fs from 'node:fs/promises';
 import {spawn} from 'node:child_process';
 import assert from 'node:assert/strict';
-import {services,serviceGroups} from '../src/lib/content.ts';
+import {services,serviceGroups,serviceProblems} from '../src/lib/content.ts';
 
 // Every service has a unique route, a known group and complete detail copy.
 assert.equal(new Set(services.map(service=>service.slug)).size,services.length);
 for(const service of services){assert(serviceGroups.some(group=>group.id===service.group),'Unknown group '+service.slug);for(const key of ['title','description','support','detail'])assert(service[key],'Missing '+key+' '+service.slug);assert(service.items.length>=3,'Too few items '+service.slug);}
+for(const problem of serviceProblems)assert(services.some(service=>service.slug===problem.slug),'Unknown problem service '+problem.slug);
 const base=process.env.CHECK_ORIGIN||'http://localhost:3107';
 const folder=new URL('../.browser-check-engineering/',import.meta.url);await fs.mkdir(folder,{recursive:true});
 const chrome=spawn('C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',['--headless=new','--disable-gpu','--remote-debugging-port=9338','--user-data-dir='+new URL('profile/',folder).pathname.replace(/^\/([A-Z]:)/,'$1'),'about:blank'],{windowsHide:true,stdio:['ignore','ignore','pipe']});
@@ -22,7 +23,6 @@ try{
  const evaluate=async expression=>{const result=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(result.exceptionDetails)throw Error(JSON.stringify(result.exceptionDetails));return result.result.value;};
  const navigate=async route=>{await send('Page.navigate',{url:base+route});await pause(600);for(let n=0;n<100;n++){if(await evaluate('document.readyState==="complete"'))break;await pause(100);}await pause(1000);};
  const screenshot=async(name,selector)=>{
-  if(selector==='.services-showcase'&&await evaluate("Boolean(document.querySelector('.reveal-pending'))"))await evaluate(`(async()=>{for(const el of document.querySelectorAll('[data-reveal]')){el.scrollIntoView({behavior:'instant',block:'center'});await new Promise(r=>setTimeout(r,1000));}})()`);
   await evaluate(`document.querySelector(${JSON.stringify(selector)}).scrollIntoView({behavior:'instant',block:'start'})`);await pause(1100);
   const box=await evaluate(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height,scale:1}})()`);
   const result=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:box});await fs.writeFile(new URL(name+'.png',folder),Buffer.from(result.data,'base64'));
@@ -36,19 +36,22 @@ try{
    assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth'),false);
    assert.equal(await evaluate('document.title'),route==='/'?'AI, Software & Engineering Solutions | CodeSquad':'AI, Software & Engineering Services | CodeSquad');
    if(route==='/'){
-    assert.equal(await evaluate('document.querySelectorAll("[role=tab]").length'),4);
+    assert.equal(await evaluate('document.querySelectorAll("[role=tab]").length'),serviceGroups.length);
     assert.equal(await evaluate('document.querySelectorAll(".sx-option").length'),services.length);
     assert.equal(await evaluate('document.querySelectorAll(".sp-card").length'),6);
     await screenshot('home-explorer-'+width,'.services-section');
    }else{
-   assert.equal(await evaluate('document.querySelectorAll(".engineering-service-card").length'),services.filter(s=>s.group!=='agriculture').length);
-   assert.equal(await evaluate('document.querySelectorAll(".agriculture-service-band li").length'),4);
-   assert.equal(await evaluate('getComputedStyle(document.querySelector(".engineering-services-grid")).gridTemplateColumns.split(" ").length'),width===1440?3:width===900?2:1);
-   const descriptions=await evaluate('Array.from(document.querySelectorAll(".engineering-service-card>p,.agriculture-service-band li p,.shared-service-strip p"),e=>e.textContent)');
+   assert.equal(await evaluate('document.querySelectorAll(".service-line").length'),services.filter(s=>s.group!=='agriculture').length);
+   assert.equal(await evaluate('document.querySelectorAll(".services-agriculture li").length'),4);
+   assert.equal(await evaluate('getComputedStyle(document.querySelector(".directory-group")).gridTemplateColumns.split(" ").length'),width===1440?2:1);
+   const descriptions=await evaluate('Array.from(document.querySelectorAll(".service-line p,.services-agriculture li p"),e=>e.textContent)');
    for(const service of services)assert(descriptions.includes(service.description),'Unchanged description '+service.slug);
-   await screenshot((route==='/'?'home':'services')+'-showcase-'+width,'.services-showcase');
-   const balance=await evaluate(`(()=>{const height=s=>document.querySelector(s).getBoundingClientRect().height;const engineering=height('.engineering-panel'),shared=height('.shared-service-strip'),agriculture=height('.agriculture-service-band');return {engineering,shared,agriculture,engineeringShare:(engineering+shared)/(engineering+shared+agriculture)*100}})()`);
-   if(width===1440)assert(balance.engineeringShare>=70,'Agriculture exceeds 30%');
+   assert.equal(await evaluate('document.querySelectorAll(".finder-problems a").length'),serviceProblems.length);
+   for(const [index,problem] of serviceProblems.entries()){await evaluate('document.querySelectorAll(".finder-problems a")['+index+'].click()');await pause(50);assert.equal(await evaluate('document.querySelector(".finder-answer h3").textContent'),services.find(s=>s.slug===problem.slug).title);assert.equal(await evaluate('document.querySelector(".finder-problems a[aria-current]").textContent'),problem.label);assert.equal(await evaluate('location.hash'),'');}
+   await screenshot('services-finder-'+width,'.services-lead');
+   await screenshot('services-showcase-'+width,'.services-showcase');
+   const balance=await evaluate(`(()=>{const height=s=>document.querySelector(s).getBoundingClientRect().height;const groups=[...document.querySelectorAll('.directory-group')].reduce((sum,e)=>sum+e.getBoundingClientRect().height,0),agriculture=height('.services-agriculture');return {groups,agriculture,mainShare:groups/(groups+agriculture)*100}})()`);
+   if(width===1440)assert(balance.mainShare>=70,'Agriculture exceeds 30%');
    results.push({route,width,balance});console.log("PASS layout",route,width,JSON.stringify(balance));
    }
    if(route==='/'){

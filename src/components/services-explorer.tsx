@@ -6,7 +6,7 @@ import {ArrowUpRight,Check} from 'lucide-react';
 import {inquiry,serviceGroups,servicesByGroup,type ServiceGroupId} from '@/lib/content';
 import {ServiceIconGlyph} from './service-icon';
 
-const tabLabels:Record<ServiceGroupId,string>={ai:'AI & Automation',software:'Software & Cloud',engineering:'Engineering',agriculture:'Agriculture'};
+const tabLabels:Record<ServiceGroupId,string>={ai:'AI & Automation',software:'Software & Cloud',engineering:'Engineering',growth:'Growth',agriculture:'Agriculture'};
 
 export function ServicesExplorer(){
  const [activeGroup,setActiveGroup]=useState<ServiceGroupId>(serviceGroups[0].id);
