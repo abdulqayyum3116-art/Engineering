@@ -56,3 +56,7 @@ The fifteen services are defined in `src/lib/content.ts`, in four groups: AI & A
 Legacy routes permanently redirect through `next.config.ts`. The sitemap derives its routes from the same service and article data as page generation. No individual files are needed for each detail route.
 
 For the local browser checks on Windows, run the production server on port 3107, then `node tests/site-check.mjs`. The check uses installed Edge in headless mode and writes screenshots and results to the ignored `.browser-check-reposition` directory. It checks every sitemap page at 1440px and 390px, headings, internal links, overflow, images, redirects, navigation, FAQ expansion, the not-sent form state and reduced motion. `CHECK_ORIGIN` can point to another local port.
+
+## Responsive check
+
+With the production server running on port 3107, run `node tests/responsive-check.mjs` (requires the `playwright` package and Chromium). It loads every sitemap page at 14 widths from 320px to 2560px and fails on horizontal scrolling, elements outside the viewport, clipped content or text under 10px. It warns about touch targets under 32px on widths below 1024px.

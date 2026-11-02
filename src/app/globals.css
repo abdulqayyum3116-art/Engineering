@@ -129,3 +129,27 @@
 .header,.capability-strip,.section,.page-intro,.breadcrumb,.site-footer-inner,.engineering-hero .hero{padding-left:var(--gutter);padding-right:var(--gutter)}
 .cta,.cta:is(*){max-width:none;margin-left:var(--gutter);margin-right:var(--gutter)}
 .wide-image{margin-left:var(--gutter);margin-right:var(--gutter)}
+/* Responsive hardening */
+h1,h2,h3,h4{overflow-wrap:break-word}
+img{max-width:100%}
+.eyebrow,.eyebrow span,.sample-tag,.hero-note,.marquee-track span,.engineering-service-card li{font-size:10px}
+@media(max-width:420px){.page-intro h1{font-size:38px;letter-spacing:-1.2px}.engineering-hero .hero-centered h1{font-size:40px}.sx-intro h3,.sp-heading h3{font-size:24px}.sx-detail h4{font-size:24px}}
+@media(max-width:1100px){
+ .nav.open{gap:2px}.nav.open>a:not(.button){display:flex;align-items:center;min-height:46px;font-size:15px;border-bottom:1px solid var(--line)}.nav.open>.button{margin-top:14px;min-height:46px}
+ .breadcrumb{align-items:center}.breadcrumb a{display:inline-flex;align-items:center;min-height:40px}
+ .faq summary{min-height:48px;align-items:center;padding:6px 0}
+ .text-link{min-height:40px}
+ .footer-engineering li,.footer-explore li{margin-bottom:2px}
+ .site-footer li a,.footer-shared,.footer-email,.footer-booking,.footer-parent,.footer-agriculture-title,.footer-legal a,.footer-home{display:inline-flex;align-items:center;min-height:42px}
+ .footer-email,.footer-parent{margin-bottom:0;margin-top:0}
+ .footer-agriculture ul{row-gap:2px}
+}
+.hero .eyebrow,.cta .eyebrow,.article-card .eyebrow,.article-card .eyebrow span{font-size:10px}
+@media(max-width:1100px){
+ .nav:not(.open)>a:not(.button){padding:12px 0}
+ .quiet-link,.sx-secondary{display:inline-flex;align-items:center;min-height:44px}.sx-secondary{padding-bottom:0}
+ .service-options label{min-height:40px}.service-options input{width:20px;height:20px}
+ .flow-node a{display:inline-flex;align-items:center;min-height:40px}
+ .agriculture-band-heading>a{display:inline-grid;place-items:center;min-width:40px;min-height:40px}
+}
+@media(max-width:1100px){.footer-email,.footer-booking,.footer-parent{display:flex;width:fit-content}}
