@@ -49,7 +49,7 @@ External photographs have original local SVG fallbacks in public/images. These i
 
 ## Service catalogue and delivery review
 
-The eight service areas and their deliverables are defined in `src/lib/content.ts`. They describe proposed service scope, not evidence of previous projects. Confirm delivery capability before launch, particularly equipment integration, sensor collection, field imagery data, automated controls and ongoing support commitments. No specific aerial or orbital imagery source is promised.
+The fifteen services are defined in `src/lib/content.ts`, in four groups: AI & Automation, Software & Cloud, Engineering Solutions and Agriculture. Groups, icons, numbering, the services showcase, footer links, enquiry options and sitemap all derive from that catalogue. `/services/engineering-software` and `/services/ai-automation` permanently redirect to their replacements. Marketing services remain with the main CodeSquad site. They describe proposed service scope, not evidence of previous projects. Confirm delivery capability before launch, particularly equipment integration, sensor collection, field imagery data, automated controls and ongoing support commitments. No specific aerial or orbital imagery source is promised.
 
 `src/components/flow-diagram.tsx` supplies the delivery, season and monitoring diagrams. All labels remain readable without animation; reduced-motion preferences disable the sequence. Enquiry availability is defined in `src/lib/content.ts` and rendered by the shared availability component in both the form and FAQ. Submissions remain unwired.
 
