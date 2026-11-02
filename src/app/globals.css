@@ -123,3 +123,9 @@
 .hero-centered p{max-width:680px;margin-left:auto;margin-right:auto;font-size:15px}
 .hero-centered .hero-actions,.hero-centered .hero-note{justify-content:center}
 @media(max-width:760px){.engineering-hero .hero-centered h1{font-size:44px;letter-spacing:-2px}.hero-centered p{font-size:13px}}
+/* Full-width layout: no 1440px cap, slim responsive side gutter */
+:root{--gutter:clamp(20px,3vw,56px)}
+.header,.hero,.capability-strip,.section,.page-intro,.breadcrumb,.engineering-marquee,.site-footer-inner{max-width:none}
+.header,.capability-strip,.section,.page-intro,.breadcrumb,.site-footer-inner,.engineering-hero .hero{padding-left:var(--gutter);padding-right:var(--gutter)}
+.cta,.cta:is(*){max-width:none;margin-left:var(--gutter);margin-right:var(--gutter)}
+.wide-image{margin-left:var(--gutter);margin-right:var(--gutter)}
