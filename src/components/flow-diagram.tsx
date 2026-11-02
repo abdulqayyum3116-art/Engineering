@@ -17,7 +17,7 @@ const monitoring:Node[] = [
  {title:'Alerts',description:'Flag agreed thresholds to the right person.'},
  {title:'Action',description:'Review, respond and record what happens.'},
 ];
-export function FlowDiagram({kind='delivery'}:{kind?:'delivery'|'season'|'monitoring'}){
+export function FlowDiagram({kind='delivery',deploymentDescription}:{kind?:'delivery'|'season'|'monitoring';deploymentDescription?:string}){
  const ref=useRef<HTMLOListElement>(null);
  const [visible,setVisible]=useState(false);
  useEffect(()=>{
@@ -27,6 +27,6 @@ export function FlowDiagram({kind='delivery'}:{kind?:'delivery'|'season'|'monito
   observer.observe(element);
   return ()=>observer.disconnect();
  },[]);
- const nodes:Node[]=kind==='delivery'?deliverySteps:kind==='season'?season:monitoring;
+ const nodes:Node[]=kind==='delivery'?deliverySteps.map((step,index)=>index===3&&deploymentDescription?{...step,description:deploymentDescription}:step):kind==='season'?season:monitoring;
  return <ol ref={ref} className={'flow-diagram '+(kind==='delivery'?'steps ':'')+(visible?'flow-visible':'')} aria-label={kind==='delivery'?'Delivery cycle':kind==='season'?'Agriculture season cycle':'Monitoring data flow'}>{nodes.map((node,n)=><li className="flow-node" key={node.title} style={{'--flow-order':n} as CSSProperties}><span className="flow-number">0{n+1} <span aria-hidden="true">✳</span></span><h3>{node.title}</h3>{node.description&&<p>{node.description}</p>}{node.slugs&&<ul>{node.slugs.map(slug=><li key={slug}><Link href={'/services/'+slug}>{services.find(s=>s.slug===slug)?.short}</Link></li>)}</ul>}{n<nodes.length-1&&<span className="flow-arrow" aria-hidden="true">↓</span>}</li>)}</ol>;
 }

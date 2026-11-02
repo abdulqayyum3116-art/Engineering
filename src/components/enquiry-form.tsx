@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, type FormEvent} from 'react';
-import {services,enquiryNotice} from '@/lib/content';
+import {existingServices as services,enquiryNotice} from '@/lib/content';
 import {EnquiryAvailability} from './shared';
 import {ArrowUpRight} from 'lucide-react';
 

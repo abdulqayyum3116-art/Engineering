@@ -1,3 +1,4 @@
+import {ServicesShowcase} from '@/components/services-showcase';
 ﻿import {EnquiryForm} from '@/components/enquiry-form';
 import {FlowDiagram} from '@/components/flow-diagram';
 import {SiteImage} from '@/components/site-image';
@@ -8,13 +9,12 @@ import path from 'node:path';
 import {MDXRemote} from 'next-mdx-remote/rsc';
 import {ArrowUpRight} from 'lucide-react';
 import {Intro,CTA,ServiceList,TextLink} from '@/components/shared';
-import {services,industries,articles,booking,origin} from '@/lib/content';
-const routes=['services',...services.map(s=>'services/'+s.slug),'industries',...industries.map(i=>'industries/'+i.slug),'about','insights',...articles.map(a=>'insights/'+a.slug),'contact'];
+import {services,industries,articles,booking,origin,servicesIntro,engineeringMetaDescription} from '@/lib/content';
+const routes=['services',...services.map(s=>'services/'+s.slug),...industries.map(i=>'industries/'+i.slug),'about','insights',...articles.map(a=>'insights/'+a.slug),'contact'];
 export const dynamicParams=false;
 export function generateStaticParams(){return routes.map(r=>({segments:r.split('/')}));}
 const pageCopy:Record<string,{title:string;description:string}>={
- services:{title:'Engineering & Agriculture Services',description:'Software, automation and data systems for engineering firms, farms and agribusinesses.'},
- industries:{title:'Engineering & Agriculture Industries',description:'Systems shaped around operational challenges in engineering, manufacturing and agriculture.'},
+ services:{title:'Engineering Services',description:engineeringMetaDescription},
  about:{title:'Our Engineering & Agriculture Approach',description:'Assess, design, build, test and deploy, then support. A practical delivery process built around your operation.'},
  insights:{title:'Engineering & Agriculture Insights',description:'Practical thinking on monitoring, field data and systems your team can use every day.'},
  contact:{title:'Discuss Your Engineering & Agriculture Project',description:'Tell CodeSquad about your operation, existing tools and the problem you want to solve.'},
@@ -47,8 +47,7 @@ export default async function Page({params}:{params:Promise<{segments:string[]}>
   {i.slug==='engineering'&&<section className="section"><span className="eyebrow">HOW WE WORK</span><h2>From assessment to support.</h2><FlowDiagram/></section>}
  </div>;
  else if(a){const content=await fs.readFile(path.join(process.cwd(),'content',a.file),'utf8');body=<><Intro label={a.category+' / '+a.read} title={a.title} description={a.excerpt}/><div className="wide-image article-banner"><SiteImage src={a.image} alt=""/></div><article className="prose"><MDXRemote source={content}/><TextLink href="/insights">Back to insights</TextLink></article><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'Article',headline:a.title,datePublished:a.date,author:{'@type':'Organization',name:'CodeSquad'},image:a.image,url:origin+'/'+route})}}/></>}
- else if(route==='services')body=<><Intro label="WHAT WE DO" title="Engineering & agriculture services." description={pageCopy.services.description}/><section className="section"><ServiceList/></section><section className="section tint"><p>Looking for marketing, content or SEO? That now lives with the <a className="text-link" href="https://www.codesquad.ai">main CodeSquad team →</a></p></section></>;
- else if(route==='industries')body=<><Intro label="WHO WE WORK WITH" title="Grounded in your industry." description={pageCopy.industries.description}/><section className="section industry-grid">{industries.map(i=><div key={i.slug}><SiteImage className="listing-image" src={i.image} alt={i.label}/><h2>{i.label}</h2><p>{i.description}</p><TextLink href={'/industries/'+i.slug}>Explore this industry</TextLink></div>)}</section></>;
+ else if(route==='services')body=<><Intro label="WHAT WE DO" title="Engineering services." description={servicesIntro}/><section className="section"><ServicesShowcase/></section><section className="section tint"><p>Looking for marketing, content or SEO? That now lives with the <a className="text-link" href="https://www.codesquad.ai">main CodeSquad team →</a></p></section></>;
  else if(route==='about')body=<><Intro label="THE CODESQUAD APPROACH" title="Understand the operation. Build the right system." description={pageCopy.about.description}/><section className="section two-col"><h2>Better systems start<br/>with better questions.</h2><div><p>Where does work slow down? Which records are entered twice? What can your team see today, and what do they need to decide? We understand the operation before proposing a system.</p><p>Review existing tools, data, working conditions and the people who use them. Agree the problem, scope and practical constraints together, including seasonal timing for agricultural work.</p><a className="text-link" href="https://www.codesquad.ai/about">Meet the wider CodeSquad team ↗</a></div></section><section className="section tint"><span className="eyebrow">HOW WE WORK</span><h2>Delivery cycle</h2><FlowDiagram/></section></>;
  else if(route==='insights')body=<><Intro label="IDEAS FROM THE FIELD" title="Useful thinking for everyday operations." description={pageCopy.insights.description}/><section className="section article-grid">{articles.map(a=><Link className="article-card" href={'/insights/'+a.slug} key={a.slug}><SiteImage className="listing-image" src={a.image} alt=""/><span className="eyebrow">{a.category} / {a.read}</span><h2>{a.title}</h2><p>{a.excerpt}</p><span className="text-link">Read article ↗</span></Link>)}</section></>;
  else body=<><Intro label="LET’S TALK" title="Tell us about your project." description={pageCopy.contact.description}/><section className="section contact-grid"><EnquiryForm/><div className="contact-options"><h2>Prefer to choose a time?</h2><p>Book a 30-minute conversation with CodeSquad.</p><a className="text-link" href={booking}>Book a consultation ↗</a><hr/><h2>Or send us a note.</h2><a className="text-link" href="mailto:info@codesquad.ai">info@codesquad.ai</a><p>Working with businesses across the US, UK, Canada, and UAE.</p></div></section></>;
