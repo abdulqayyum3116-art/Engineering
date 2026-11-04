@@ -24,7 +24,7 @@ export function Hero(){
    <h1 aria-label={headline}>{headline.split(' ').map((word,index)=><span aria-hidden="true" className={'hero-word '+(word==='work.'?'serif':'')} key={index} style={{'--word-order':index} as CSSProperties}>{word}{' '}</span>)}<span aria-hidden="true" className="hero-star">✳</span></h1>
    <p className="hero-enter-copy">CodeSquad builds AI, custom software, cloud and automation systems for engineering firms, manufacturers and industrial teams.</p>
    <div className="hero-actions"><a className="button" href={inquiry}>Let’s talk <ArrowUpRight size={18}/></a><Link className="quiet-link" href="/services">Explore our services <ArrowDown size={16}/></Link></div>
-   <div className="hero-note"><span className="mini-line"/> Software. Automation. Data. Built around your operation.</div>
+   <div className="hero-note">Software. Automation. Data. Built around your operation.</div>
   </div>
  </section><div className="engineering-marquee" tabIndex={0} aria-label="Capabilities"><div className="marquee-track"><span>{capabilities}</span><span aria-hidden="true">{capabilities}</span></div></div></div>;
 }
